@@ -26,18 +26,22 @@ public class Keyboar {
             InlineKeyboardButton b5 = new InlineKeyboardButton("❤\uFE0FСфера здоровья").callbackData("callback_data5");
             InlineKeyboardButton b6 = new InlineKeyboardButton("\uD83D\uDE36\u200D\uD83C\uDF2B\uFE0FВысшая миссия души").callbackData("callback_data6");
 
-            InlineKeyboardButton restart = new InlineKeyboardButton("Начать сначала").callbackData("restart");
+            InlineKeyboardButton restart = new InlineKeyboardButton("\uD83E\uDD28Начать сначала").callbackData("restart");
+            InlineKeyboardButton star = new InlineKeyboardButton("\uD83C\uDF1FЗвезда").callbackData("star");
             InlineKeyboardButton[] l1 = new InlineKeyboardButton[]{b1, b2};
             InlineKeyboardButton[] l2 = new InlineKeyboardButton[]{b3, b4};
             InlineKeyboardButton[] l3 = new InlineKeyboardButton[]{b5, b6};
             InlineKeyboardButton[] l4 = new InlineKeyboardButton[]{restart};
+            InlineKeyboardButton[] l5 = new InlineKeyboardButton[]{star};
 
 
             InlineKeyboardMarkup inlineKeyboard = new InlineKeyboardMarkup();
+            inlineKeyboard.addRow(l5);
             inlineKeyboard.addRow(l1);
             inlineKeyboard.addRow(l2);
             inlineKeyboard.addRow(l3);
             inlineKeyboard.addRow(l4);
+
             return inlineKeyboard;
         }
 

@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class Accept_date_birth {
     static String get_date(String strDate) {
-        final List<String> dateFormats = Arrays.asList("dd-MM-yyyy", "MM-dd-yyyy", "MM/dd/yyyy", "dd/MM/yyyy", "dd.MM.yy", "dd.MM.yyyy", "dd MM yy", "dd MM YYyy", "dd_MM_yy", "dd/MM/yyyy");
+        final List<String> dateFormats = Arrays.asList("dd-MM-yyyy", "MM-dd-yyyy", "MM/dd/yyyy", "dd/MM/yyyy", "dd.MM.yy", "dd.MM.yyyy", "dd MM yy", "dd MM YYyy", "dd_MM_yy", "dd/MM/yyyy","dd,MM,yy","dd.MM.yyyy");
         SimpleDateFormat sdf;
         //Наш формат
         final String RU_FORMAT = "dd.MM.yyyy";

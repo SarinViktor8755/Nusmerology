@@ -6,16 +6,18 @@ import com.pengrad.telegrambot.model.InlineQuery;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.model.request.*;
-import com.pengrad.telegrambot.request.AnswerCallbackQuery;
-import com.pengrad.telegrambot.request.AnswerInlineQuery;
-import com.pengrad.telegrambot.request.SendInvoice;
-import com.pengrad.telegrambot.request.SendMessage;
+import com.pengrad.telegrambot.request.*;
 import com.pengrad.telegrambot.response.BaseResponse;
 import com.pengrad.telegrambot.response.SendResponse;
 import com.pengrad.telegrambot.utility.BotUtils;
+import org.example.users.Text_puttern;
 import org.example.users.User;
 import org.example.users.Users;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.Key;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -73,6 +75,7 @@ public class Main {
                     mes = updates.get(i);
                     System.out.println(mes);
                     if (mes.callbackQuery() != null) {
+
                         //System.out.println("callbackQuery");
                         BaseResponse response = bot.execute(new AnswerCallbackQuery(mes.callbackQuery().id()));
                         bot.execute(new AnswerInlineQuery("callbackQuery"));
@@ -81,9 +84,15 @@ public class Main {
                         System.out.println(mes.callbackQuery());
                         long chatId = mes.callbackQuery().from().id();
                         if (Users.fine_user(chatId).getEtap() != 1) {
-                            bot.execute(new SendMessage(chatId, "Напиши дату рождения в формате дд.мм.гггг"));
+                            bot.execute(new SendMessage(chatId, Text_puttern.date_of_birth));
 
                         }else {
+
+
+
+
+
+                            //////////
                             if (mes.callbackQuery().data().equals("callback_data1"))
                                 bot.execute(new SendMessage(chatId, "Сфера личности"));
                             if (mes.callbackQuery().data().equals("callback_data2"))
@@ -103,6 +112,13 @@ public class Main {
                                 Users.fine_user(chatId).restart_etap();
 
                             }
+
+                            if (mes.callbackQuery().data().equals("star")){
+                                Path imagePath = Paths.get("yourImageName.PNG");
+                                byte[] imageBytes = Files.readAllBytes(imagePath);
+                                DrawingStar.get_star();
+                                bot.execute(new SendPhoto(chatId, imageBytes));
+                            }
                             if (Users.fine_user(chatId).getEtap() == 1) bot.execute(new SendMessage(chatId, "Выберети сферу :").protectContent(true).replyMarkup(Keyboar.getKeyBord()));
                         }
 
@@ -114,6 +130,9 @@ public class Main {
                         long chatId = mes.message().chat().id();
                         String text_messege = get_text_to_mesege_from_update(mes);
                         String answer = process_message(text_messege, id_user);
+
+
+
 
                         if (Users.fine_user(id_user).getEtap() == 0)
                             bot.execute(new SendMessage(chatId, answer).replyToMessageId(mes.message().messageId()));
@@ -136,7 +155,7 @@ public class Main {
 //                    throw new RuntimeException(e);
 //                }
 
-                } catch (NullPointerException e) {
+                } catch (NullPointerException | IOException e) {
                     e.printStackTrace();
                 }
             }
