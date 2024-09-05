@@ -14,5 +14,8 @@ public class Users {
         return user;
     }
 
+    public static HashMap<Long, User> getUsers() {
+        return users;
+    }
 
 }

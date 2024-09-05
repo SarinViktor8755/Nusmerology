@@ -23,7 +23,12 @@ public class User {
         return etap;
     }
 
+    public void setEtap(int etap) {
+        this.etap = etap;
+    }
+
     public void restart_etap() {
         this.etap = 0;
+        date_birth = null;
     }
 }

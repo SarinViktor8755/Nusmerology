@@ -25,7 +25,7 @@ public class Accept_date_birth {
                 if (sdf.parse(strDate) != null) {
                     Date date = sdf.parse(strDate);
                     sdf.applyPattern(RU_FORMAT);
-                    Accept_date_birth.currect_date_birth(sdf.format(date));
+                    //Accept_date_birth.currect_date_birth(sdf.format(date));
                     return currect_date_birth(sdf.format(date));
                 }
                 break;
@@ -58,22 +58,7 @@ public class Accept_date_birth {
     }
 
 
-    static public int reduce_number_to_single_digit(int in) {
-        if (in < 10) return in;
-        if (in == 10) return 1;
-        int temp = 0;
-        while (in > 10) {
 
-            while (in > 0) {
-                long l = in % 10;
-                temp += l;
-                in /= 10;
-            }
-        }
-        if (temp > 10) temp = reduce_number_to_single_digit(temp);
-        if (temp == 10) temp = 1;
-        return temp;
-    }
 
     static public int[] get_10_ches(String ches) throws ParseException {
         int[] arr = new int[3];
@@ -83,7 +68,7 @@ public class Accept_date_birth {
 
             for (int i = 0; i < ps.length; i++) {
                 System.out.println(ps[i]);
-                arr[i] = reduce_number_to_single_digit(Integer.valueOf(ps[i]));
+              //  arr[i] = reduce_number_to_single_digit(Integer.valueOf(ps[i]));
             }
         } catch (NumberFormatException e) {
             for (int i = 0; i < arr.length; i++) {

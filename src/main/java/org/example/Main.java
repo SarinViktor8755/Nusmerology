@@ -2,88 +2,42 @@ package org.example;
 
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
-import com.pengrad.telegrambot.model.InlineQuery;
-import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
-import com.pengrad.telegrambot.model.request.*;
 import com.pengrad.telegrambot.request.*;
-import com.pengrad.telegrambot.response.BaseResponse;
 import com.pengrad.telegrambot.response.SendResponse;
-import com.pengrad.telegrambot.utility.BotUtils;
-import org.example.users.Text_puttern;
-import org.example.users.User;
-import org.example.users.Users;
+import org.example.users.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.Key;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.*;
 
 
 public class Main {
     static String BOT_TOKKEN_test = "7039553340:AAHCuowlWMQltfoQNwXOg6MUQ3srtm95N0o";
 
     public static void main(String[] args) {
-//        for (int i = 0; i < 3500; i++) {
-//            System.out.println(i);
-//            System.out.println(Accept_date_birth.reduce_number_to_single_digit(i));
-//            System.out.println();
-//        }
 
 
         TelegramBot bot = new TelegramBot(BOT_TOKKEN_test);
 
-//        for (int i = 1; i < 3000; i++) {
-//            System.out.println("--"+i);
-//            System.out.println(reduce_number_to_single_digit(i));
-//        }
-//
-//        System.out.println(Accept_date_birth.get_date("25.03.87"));
-//        System.out.println(Accept_date_birth.get_date("25.03.1987"));
-//        System.out.println(Accept_date_birth.get_date("25/03/87"));
-//        System.out.println(Accept_date_birth.get_date("25-03-2015"));
-//        System.out.println(Accept_date_birth.get_date("25 03 86"));
-//        System.out.println(Accept_date_birth.get_date("25 03 1986"));
-//        System.out.println(Accept_date_birth.get_date("25_03_86"));
-//        Accept_date_birth.get_date("25_03_86");
-//        System.out.println("-----");
-//        System.out.println("11");
-//            System.out.println(Accept_date_birth.reduce_number_to_single_digit(11));
-//        System.out.println("-----");
-//        System.out.println("1987");
-
-
-        //    System.out.println(Accept_date_birth.reduce_number_to_single_digit(1987));
-
-//        System.out.println(Users.fine_user(13L));
-//        if(Users.fine_user(13L)==null) System.out.println("--");
-
-
+        Save_to_disk.load_to_disk_points_for_users();
         bot.setUpdatesListener(updates -> {
             Update mes;
-            Long id_user;
 
             for (int i = 0; i < updates.size(); i++) {
+                mes = updates.get(i);
+                //    System.out.println(mes);
+                try {
 
 
-
-
-
-                    mes = updates.get(i);
-                    System.out.println(mes);
-
-
-                    if (mes.callbackQuery() != null) _callbackQuery(mes,bot);
-
-                    if (mes.message() != null) _massege(mes,bot);
-
-
-
-
+                if (mes.callbackQuery() != null) _callbackQuery(mes, bot);
+                if (mes.message() != null) _massege(mes, bot);
+                }catch (NullPointerException e){
+                    e.printStackTrace();
+                }
             }
 
 
@@ -102,16 +56,17 @@ public class Main {
 
     }
 
-    private static String process_message(String mes, Long user_id) {
+    private static String process_message(String mes, Long user_id, TelegramBot bot) {
         StringBuilder sb = new StringBuilder();
         User user = Users.fine_user(user_id);
         //System.out.println(user.getDate_birth());
         String bd = Accept_date_birth.get_date(mes);
         if (bd.length() > 1) user.setDate_birth(bd);
 
-        if (user.getDate_birth() == null) sb.append("Напиши дату рождения в формате дд.мм.гггг");
+        // if (bd.length() > 1)   StringToDate(bd);
+        if (user.getDate_birth() == null) sb.append(Text_puttern.date_of_birth);
         else sb.append(user.getDate_birth());
-
+        Save_to_disk.save_to_disk_users();
         return sb.toString();
 
     }
@@ -123,24 +78,31 @@ public class Main {
         return result;
     }
 
-    private static void _callbackQuery(Update mes,TelegramBot bot)  {
+    private static void _callbackQuery(Update mes, TelegramBot bot)throws NullPointerException {
 
-        //System.out.println("callbackQuery");
         bot.execute(new AnswerCallbackQuery(mes.callbackQuery().id()));
         bot.execute(new AnswerInlineQuery("callbackQuery"));
 
         // System.out.println(mes.callbackQuery().data());
-        System.out.println(mes.callbackQuery());
+        //  System.out.println(mes.callbackQuery());
         long chatId = mes.callbackQuery().from().id();
+       // System.out.println(Users.fine_user(chatId).getDate_birth().equals("null"));
+        try {
+            if (Users.fine_user(chatId).getDate_birth().equals("null")) Users.fine_user(chatId).setEtap(0); // если дата рождения null
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
+
         if (Users.fine_user(chatId).getEtap() != 1) {
             bot.execute(new SendMessage(chatId, Text_puttern.date_of_birth));
-
-        }else {
+        } else {
 
 
             //////////
+            HashMap<Integer, Integer> nomera = Service.calck_number(Users.fine_user(chatId).getDate_birth());
+
             if (mes.callbackQuery().data().equals("callback_data1"))
-                bot.execute(new SendMessage(chatId, "Сфера личности"));
+                bot.execute(new SendMessage(chatId, Array_TEXT.getTextFromArkan(nomera.get(Service.LICHNOST), Service.LICHNOST)));
             if (mes.callbackQuery().data().equals("callback_data2"))
                 bot.execute(new SendMessage(chatId, "Сфера духовности"));
             if (mes.callbackQuery().data().equals("callback_data3"))
@@ -153,37 +115,41 @@ public class Main {
                 bot.execute(new SendMessage(chatId, "высшая миссия души"));
 
 
-            if (mes.callbackQuery().data().equals("restart")){
+            if (mes.callbackQuery().data().equals("restart")) {
                 bot.execute(new SendMessage(chatId, "Напиши дату рождения в формате дд.мм.гггг"));
                 Users.fine_user(chatId).restart_etap();
 
             }
 
-            if (mes.callbackQuery().data().equals("star")){
+            if (mes.callbackQuery().data().equals("star")) {
                 try {
-
-
+                    DrawingStar.get_star(Users.fine_user(chatId).getDate_birth());
                     Path imagePath = Paths.get("yourImageName.PNG");
-                    byte[] imageBytes = Files.readAllBytes(imagePath);
-                    DrawingStar.get_star();
-                    bot.execute(new SendPhoto(chatId, imageBytes));
-                }catch (IOException e){e.printStackTrace();}
+                    byte[] c = Files.readAllBytes(imagePath);
+
+
+                    SendResponse a = bot.execute(new SendPhoto(chatId, c));
+                    System.out.println(a);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-            if (Users.fine_user(chatId).getEtap() == 1) bot.execute(new SendMessage(chatId, "Выберети сферу :").protectContent(true).replyMarkup(Keyboar.getKeyBord()));
+            if (Users.fine_user(chatId).getEtap() == 1)
+                bot.execute(new SendMessage(chatId, "Дата рождения " + Users.getUsers().get(chatId).getDate_birth() + " Выберети сферу :").protectContent(true).replyMarkup(Keyboar.getKeyBord()));
         }
     }
 
-    private static void _massege(Update mes, TelegramBot bot){
+    private static void _massege(Update mes, TelegramBot bot) throws NullPointerException {
         Long id_user = mes.message().from().id();
         long chatId = mes.message().chat().id();
         String text_messege = get_text_to_mesege_from_update(mes);
-        String answer = process_message(text_messege, id_user);
-
+        String answer = process_message(text_messege, id_user, bot);
 
         if (Users.fine_user(id_user).getEtap() == 0)
             bot.execute(new SendMessage(chatId, answer).replyToMessageId(mes.message().messageId()));
         if (Users.fine_user(id_user).getEtap() == 1) {
-            SendMessage call = new SendMessage(chatId, "Выберети сферу :").protectContent(true).replyMarkup(Keyboar.getKeyBord());
+
+            SendMessage call = new SendMessage(chatId, "Дата рождения " + Users.getUsers().get(chatId).getDate_birth() + ". Выберети сферу :").protectContent(true).replyMarkup(Keyboar.getKeyBord());
             bot.execute(call);
         }
     }
