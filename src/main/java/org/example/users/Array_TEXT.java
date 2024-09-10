@@ -3,7 +3,16 @@ package org.example.users;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
+
 public class Array_TEXT {
+
+    public static Integer LICHNOST_COD = 1;
+    public static Integer DUCHOVNOST_COD = 2;
+    public static Integer FINANS_COD = 3;
+    public static Integer ZDOROVIE_COD = 4;
+    public static Integer OTNOSHENIE_COD = 5;
+    public static Integer MISSION_DUSHI_COD = 6;
     public static HashMap<Integer, String> text = new HashMap<Integer, String>() {
         {
             put(101, "Лидеры, новаторы, стремящиеся быть номером 1 во всем.Оптимисты, позитивные люди.Генераторы идей.Решительные и волевые, легко адаптирующиеся к новым условиям.Успешные лидеры, занимающие высокие должности, опытные управленцы, умеющие властвовать за собой и другими.");
@@ -23,9 +32,8 @@ public class Array_TEXT {
         return text.get(key);
     }
 
-    public static String getTextFromArkan(int key, int arkan) {
-        //System.out.println((arkan * 100) + key);
-        return text.get((arkan * 100) + key);
+    public static String getTextFromArkan(int znach, int arkan) {
+        return text.get((arkan * 100) + znach);
     }
 
 
