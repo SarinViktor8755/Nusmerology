@@ -40,7 +40,8 @@ public class Service {
     static public int reduce_number_to_single_digit(int in, int to) {
         if (in <= to) return in;
         int result = in;
-        while (result >= to) {
+        while (result > to) {
+        //    System.out.println(result +" > " + to);
             List<Integer> numbers = Arrays
                     .stream(String.valueOf(result).split(""))
                     .map(Integer::valueOf)
@@ -49,6 +50,8 @@ public class Service {
             result = numbers.stream().mapToInt(Integer::intValue).sum();
             // System.out.println(result);
         }
+      //  System.out.println("..." + result);
+       // System.out.println();
         //  if(result>to) reduce_number_to_single_digit(result,to);
         return result;
     }
@@ -65,23 +68,24 @@ public class Service {
         nomera.put(OTNOSHENIE, 4);
         nomera.put(ZDOROVIE, 5);
         nomera.put(MISSION_DUSHI, 6);
-
+     //   System.out.println("1");
         int lig = Service.reduce_number_to_single_digit(calendar.get(Calendar.DAY_OF_MONTH), raz);
         int duh = Service.reduce_number_to_single_digit(calendar.get(Calendar.MONTH) + 1, raz);
         int finans = Service.reduce_number_to_single_digit(calendar.get(Calendar.YEAR), raz);
-
+     //   System.out.println("2");
         int otnoh = Service.reduce_number_to_single_digit(lig + duh + finans, raz);
+     //   System.out.println("3");
         int zdor = Service.reduce_number_to_single_digit(lig + duh + finans + otnoh, raz);
         int missia_duh = Service.reduce_number_to_single_digit(lig + duh + finans + otnoh + zdor, raz);
-
+        //System.out.println("3");
         nomera.put(LICHNOST, lig);
         nomera.put(DUCHOVNOST, duh);
         nomera.put(FINANS, finans);
-
+      //  System.out.println("4");
         nomera.put(OTNOSHENIE, otnoh);
         nomera.put(ZDOROVIE, zdor);
         nomera.put(MISSION_DUSHI, missia_duh);
-
+       // System.out.println("5");
 
         nomera.put(11, Service.reduce_number_to_single_digit(lig + duh, raz));
         nomera.put(12, Service.reduce_number_to_single_digit(duh + finans, raz));
@@ -106,10 +110,10 @@ public class Service {
         nomera.put(93, Service.reduce_number_to_single_digit(nomera.get(12) + nomera.get(14), raz));
         nomera.put(94, Service.reduce_number_to_single_digit(nomera.get(13) + nomera.get(15), raz));
         nomera.put(95, Service.reduce_number_to_single_digit(nomera.get(15) + nomera.get(14), raz));
-        System.out.println("!!!!!!!!!!!");
-        for (Integer key : nomera.keySet()) {
-            System.out.println(key + "=" + nomera.get(key));
-        }
+     //   System.out.println("!!!!!!!!!!!");
+//        for (Integer key : nomera.keySet()) {
+//            System.out.println(key + "=" + nomera.get(key));
+//        }
 
 
 

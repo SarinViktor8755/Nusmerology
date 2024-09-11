@@ -12,10 +12,15 @@ import java.util.Random;
 public class DrawingStar {
 
 
-    public static BufferedImage get_star(String birthday, int raz) throws IOException {
-
+    public synchronized static BufferedImage get_star(String birthday, int raz) throws IOException {
+  //      System.out.println();
+  //      System.out.println("calck_STAR");
         HashMap<Integer, Integer> nomera = Service.calck_number_(birthday, raz);
 
+//        for (int i = 0; i < 100; i++) {
+//                nomera.put(i,i);
+//        }
+     //   System.out.println("draw_star");
         String imagePath = "imageStar.jpg";
         BufferedImage myPicture = ImageIO.read(new File(imagePath));
         Graphics2D g2d = (Graphics2D) myPicture.getGraphics();
@@ -66,15 +71,17 @@ public class DrawingStar {
         g2d.drawString(String.valueOf(nomera.get(94)), 217, 300);
         g2d.drawString(String.valueOf(nomera.get(95)), 260, 300);
 
+     //   System.out.println("STOPdraw_star");
 
-        ImageIO.write(myPicture, "PNG", new File("yourImageName.PNG"));
+
+         ImageIO.write(myPicture, "PNG", new File("yourImageName.PNG"));
 
 
         return myPicture;
     }
 
 
-    public static BufferedImage draw_vertex(String birthday, int raz, int l1, int l2, int l3, int l4, int l5, int l6) throws IOException {
+    public static BufferedImage draw_vertex(String birthday, String tile, int raz, int l1, int l2, int l3, int l4, int l5, int l6) throws IOException {
         Service.calck_number_(birthday, raz);
 
         String imagePath = "imageVertax.jpg";
@@ -84,8 +91,10 @@ public class DrawingStar {
         g2d.setColor(Color.BLACK);
         g2d.setFont(new Font("Purisa", Font.BOLD, 18));
 
+        g2d.setFont(new Font("Purisa", Font.BOLD, 10));
+        g2d.drawString(tile, 5, 10);
 
-
+        g2d.setFont(new Font("Purisa", Font.BOLD, 18));
 
         g2d.drawString(String.valueOf(l1), 12, 170);
         g2d.drawString(String.valueOf(l2), 150, 170);

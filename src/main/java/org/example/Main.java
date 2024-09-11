@@ -35,14 +35,14 @@ public class Main {
 ////                }
 //
 //                System.out.println("01.03.87");
-                //    System.out.println(mes);
+                    System.out.println(mes);
 
                 try {
 
                     //   Payment.Pay(bot,mes.message().from().id());
                     if (mes.callbackQuery() != null) _callbackQuery(mes, bot);
                     if (mes.message() != null) _massege(mes, bot);
-                } catch (NullPointerException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -105,39 +105,38 @@ public class Main {
             bot.execute(new SendMessage(chatId, Text_puttern.date_of_birth).parseMode(ParseMode.HTML));
         } else {
 
-
             if (mes.callbackQuery().data().equals("callback_data1")) {
-                _massege_arkan(chatId,bot,22,13,11,1,92,75,71);
-                _massege_arkan(chatId,bot,9,13,11,1,92,75,71);
+                     _massege_arkan(chatId,bot,"Личность",22,13,11,1,92,75,71);
+                     _massege_arkan(chatId,bot,"Личность",9,13,11,1,92,75,71);
             }
             if (mes.callbackQuery().data().equals("callback_data2"))
                // bot.execute(new SendMessage(chatId, "Сфера духовности").parseMode(ParseMode.HTML));
             {
-                _massege_arkan(chatId, bot, 22, 11, 12, 2, 91, 72, 73);
-                _massege_arkan(chatId, bot, 9, 11, 12, 2, 91, 72, 73);
+                _massege_arkan(chatId, bot,"Духовность", 22, 11, 12, 2, 91, 72, 73);
+                _massege_arkan(chatId, bot,"Духовность", 9, 11, 12, 2, 91, 72, 73);
             }
               //   _massege_arkan(chatId,bot,10,11,12,2,91,72,73);
             if (mes.callbackQuery().data().equals("callback_data3")) {
-                _massege_arkan(chatId, bot, 22, 12, 14, 3, 93, 74, 80);
-                _massege_arkan(chatId, bot, 9, 12, 14, 3, 93, 74, 80);
+                _massege_arkan(chatId, bot,"Деньги", 22, 12, 14, 3, 93, 74, 80);
+                _massege_arkan(chatId, bot,"Деньги", 9, 12, 14, 3, 93, 74, 80);
             }
-            // _massege_arkan(chatId,bot,10,12,14,3,93,74,80);
+             //_massege_arkan(chatId,bot,10,12,14,3,93,74,80);
             if (mes.callbackQuery().data().equals("callback_data4")){
-            //  bot.execute(new SendMessage(chatId, "сфера отношений").parseMode(ParseMode.HTML));
-
-
-                _massege_arkan(chatId, bot, 22, 15, 13, 5, 94, 76, 77);
-                _massege_arkan(chatId, bot, 9, 15, 13, 5, 94, 76, 77);
+              bot.execute(new SendMessage(chatId, "сфера отношений").parseMode(ParseMode.HTML));
+                _massege_arkan(chatId, bot, "Отошения",22, 15, 13, 5, 94, 76, 77);
+                _massege_arkan(chatId, bot, "Отошения",9, 15, 13, 5, 94, 76, 77);
 
             }
             if (mes.callbackQuery().data().equals("callback_data5")) {
-                _massege_arkan(chatId,bot,22,14,15,4,95,79,78);
-                _massege_arkan(chatId,bot,9,14,15,4,95,79,78);
+                _massege_arkan(chatId,bot,"Здоровье",22,14,15,4,95,79,78);
+                _massege_arkan(chatId,bot,"Здоровье",9,14,15,4,95,79,78);
             }
              //   bot.execute(new SendMessage(chatId, "сфера здоровья").parseMode(ParseMode.HTML));
-            if (mes.callbackQuery().data().equals("callback_data6"))
+            if (mes.callbackQuery().data().equals("callback_data6")){
+                bot.execute(new SendMessage(chatId, "высшая миссия души").parseMode(ParseMode.HTML));
+            }
 
-           //     bot.execute(new SendMessage(chatId, "высшая миссия души").parseMode(ParseMode.HTML));
+
 
             if (mes.callbackQuery().data().equals("restart")) {
                 bot.execute(new SendMessage(chatId, "Напиши дату рождения в формате <u>дд.мм.гггг</u>").parseMode(ParseMode.HTML));
@@ -148,12 +147,15 @@ public class Main {
             if (mes.callbackQuery().data().equals("star")) {
                 try {
                     DrawingStar.get_star(Users.fine_user(chatId).getDate_birth(), 22);
+                 //   System.out.println("1----------");
+
                     Path imagePath = Paths.get("yourImageName.PNG");
                     byte[] c = Files.readAllBytes(imagePath);
-
+                 //   System.out.println("execute!!!!");
                     SendResponse a = bot.execute(new SendPhoto(chatId, c));
-                    // System.out.println(a);
 
+
+                     System.out.println(a);
                     DrawingStar.get_star(Users.fine_user(chatId).getDate_birth(), 9);
                     imagePath = Paths.get("yourImageName.PNG");
                     c = Files.readAllBytes(imagePath);
@@ -182,13 +184,18 @@ public class Main {
         }
     }
 
-    private static void _massege_arkan(Long chatId, TelegramBot bot, int raz,int l1, int l2, int l3, int l4, int l5, int l6 ){ // отапрвляет сообщения о предсказании
+    private synchronized static void _massege_arkan(Long chatId, TelegramBot bot,String tile, int raz,int l1, int l2, int l3, int l4, int l5, int l6 ){ // отапрвляет сообщения о предсказании
         try {
+          //  System.out.println();
+          //  System.out.println("clak_TRI");
             HashMap<Integer, Integer> nomera = Service.calck_number_(Users.fine_user(chatId).getDate_birth(), raz);
-            DrawingStar.draw_vertex(Users.fine_user(chatId).getDate_birth(), raz, nomera.get(l1),nomera.get(l2),nomera.get(l3),nomera.get(l4),nomera.get(l5),nomera.get(l6));
+         //   System.out.println("draw_TRI");
+            DrawingStar.draw_vertex(Users.fine_user(chatId).getDate_birth(),tile , raz, nomera.get(l1),nomera.get(l2),nomera.get(l3),nomera.get(l4),nomera.get(l5),nomera.get(l6));
             Path imagePath = Paths.get("yourImageName.PNG");
             byte[] c = Files.readAllBytes(imagePath);
+         //   System.out.println("STOPdraw_TRI");
             bot.execute(new SendPhoto(chatId, c).caption(Array_TEXT.getTextFromArkan(Service.LICHNOST, Array_TEXT.LICHNOST_COD)));
+         //   System.out.println("execute!!!!");
         } catch (IOException e) {
             e.printStackTrace();
         }
