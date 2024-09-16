@@ -62,7 +62,7 @@ public class Save_to_disk {
                 user.setEtap(Integer.valueOf(split_l[1]));
                 user.setDate_birth(String.valueOf(split_l[2]));
                 Users.getUsers().put(Long.valueOf(split_l[0]),user);
-                System.out.println("!!" + split_l[2]);
+                //  System.out.println("!!" + split_l[2]);
                 line = reader.readLine();
             }
 

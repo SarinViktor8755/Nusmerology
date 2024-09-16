@@ -1,6 +1,7 @@
 package org.example.users;
 
 public class User {
+
     private String date_birth;
     private int etap;
     private Long date_of_writing_the_first_message = 0L;
@@ -30,5 +31,10 @@ public class User {
     public void restart_etap() {
         this.etap = 0;
         date_birth = null;
+    }
+
+    @Override
+    public String toString() {
+        return  "DB='" + getDate_birth() + ", etap=" + getEtap() + ", first_message=" + date_of_writing_the_first_message;
     }
 }

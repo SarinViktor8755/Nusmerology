@@ -8,11 +8,17 @@ import com.pengrad.telegrambot.request.*;
 import com.pengrad.telegrambot.response.SendResponse;
 import org.example.users.*;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 
 public class Main {
@@ -20,7 +26,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-
+        DrawingStar.load_assets();
         TelegramBot bot = new TelegramBot(BOT_TOKKEN_test);
 
         Save_to_disk.load_to_disk_points_for_users();
@@ -35,11 +41,12 @@ public class Main {
 ////                }
 //
 //                System.out.println("01.03.87");
-                    System.out.println(mes);
+                System.out.println(mes);
 
                 try {
 
                     //   Payment.Pay(bot,mes.message().from().id());
+
                     if (mes.callbackQuery() != null) _callbackQuery(mes, bot);
                     if (mes.message() != null) _massege(mes, bot);
                 } catch (Exception e) {
@@ -61,6 +68,41 @@ public class Main {
         });
 
 
+    }
+
+
+    ////////////
+    private static void check_users(Update message, TelegramBot bot) {
+
+        try {
+
+            ///
+            if (message.message().text().indexOf("/users") == 0) {
+                if (Users.isAdmin(message.message().from().id()))
+                    bot.execute(new SendMessage(message.message().chat().id(), get_users()));
+            }
+
+            String nik = message.message().from().firstName();
+
+//            System.out.println(message);
+
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static String get_users() {
+        StringBuilder sb = new StringBuilder();
+
+
+        Iterator<Map.Entry<Long, User>> itr = Users.getUsers().entrySet().iterator();
+        while (itr.hasNext()) {
+            // System.out.println(itr.next());
+            sb.append(itr.next());
+            sb.append("\n");
+
+        }
+        return sb.toString();
     }
 
     private static String process_message(String mes, Long user_id, TelegramBot bot) {
@@ -106,36 +148,36 @@ public class Main {
         } else {
 
             if (mes.callbackQuery().data().equals("callback_data1")) {
-                     _massege_arkan(chatId,bot,"Личность",22,13,11,1,92,75,71);
-                     _massege_arkan(chatId,bot,"Личность",9,13,11,1,92,75,71);
+                //  new  (chatId,int[1,2,3]a);
+                _massege_arkan(chatId, bot, "Личность", 22, 13, 11, 1, 92, 75, 71);
+                _massege_arkan(chatId, bot, "Личность", 9, 13, 11, 1, 92, 75, 71);
             }
             if (mes.callbackQuery().data().equals("callback_data2"))
-               // bot.execute(new SendMessage(chatId, "Сфера духовности").parseMode(ParseMode.HTML));
+            // bot.execute(new SendMessage(chatId, "Сфера духовности").parseMode(ParseMode.HTML));
             {
-                _massege_arkan(chatId, bot,"Духовность", 22, 11, 12, 2, 91, 72, 73);
-                _massege_arkan(chatId, bot,"Духовность", 9, 11, 12, 2, 91, 72, 73);
+                _massege_arkan(chatId, bot, "Духовность", 22, 11, 12, 2, 91, 72, 73);
+                _massege_arkan(chatId, bot, "Духовность", 9, 11, 12, 2, 91, 72, 73);
             }
-              //   _massege_arkan(chatId,bot,10,11,12,2,91,72,73);
+            //   _massege_arkan(chatId,bot,10,11,12,2,91,72,73);
             if (mes.callbackQuery().data().equals("callback_data3")) {
-                _massege_arkan(chatId, bot,"Деньги", 22, 12, 14, 3, 93, 74, 80);
-                _massege_arkan(chatId, bot,"Деньги", 9, 12, 14, 3, 93, 74, 80);
+                _massege_arkan(chatId, bot, "Деньги", 22, 12, 14, 3, 93, 74, 80);
+                _massege_arkan(chatId, bot, "Деньги", 9, 12, 14, 3, 93, 74, 80);
             }
-             //_massege_arkan(chatId,bot,10,12,14,3,93,74,80);
-            if (mes.callbackQuery().data().equals("callback_data4")){
-              bot.execute(new SendMessage(chatId, "сфера отношений").parseMode(ParseMode.HTML));
-                _massege_arkan(chatId, bot, "Отошения",22, 15, 13, 5, 94, 76, 77);
-                _massege_arkan(chatId, bot, "Отошения",9, 15, 13, 5, 94, 76, 77);
+            //_massege_arkan(chatId,bot,10,12,14,3,93,74,80);
+            if (mes.callbackQuery().data().equals("callback_data4")) {
+                bot.execute(new SendMessage(chatId, "сфера отношений").parseMode(ParseMode.HTML));
+                _massege_arkan(chatId, bot, "Отошения", 22, 15, 13, 5, 94, 76, 77);
+                _massege_arkan(chatId, bot, "Отошения", 9, 15, 13, 5, 94, 76, 77);
 
             }
             if (mes.callbackQuery().data().equals("callback_data5")) {
-                _massege_arkan(chatId,bot,"Здоровье",22,14,15,4,95,79,78);
-                _massege_arkan(chatId,bot,"Здоровье",9,14,15,4,95,79,78);
+                _massege_arkan(chatId, bot, "Здоровье", 22, 14, 15, 4, 95, 79, 78);
+                _massege_arkan(chatId, bot, "Здоровье", 9, 14, 15, 4, 95, 79, 78);
             }
-             //   bot.execute(new SendMessage(chatId, "сфера здоровья").parseMode(ParseMode.HTML));
-            if (mes.callbackQuery().data().equals("callback_data6")){
+            //   bot.execute(new SendMessage(chatId, "сфера здоровья").parseMode(ParseMode.HTML));
+            if (mes.callbackQuery().data().equals("callback_data6")) {
                 bot.execute(new SendMessage(chatId, "высшая миссия души").parseMode(ParseMode.HTML));
             }
-
 
 
             if (mes.callbackQuery().data().equals("restart")) {
@@ -146,20 +188,18 @@ public class Main {
 
             if (mes.callbackQuery().data().equals("star")) {
                 try {
-                    DrawingStar.get_star(Users.fine_user(chatId).getDate_birth(), 22);
-                 //   System.out.println("1----------");
+                    BufferedImage bi = DrawingStar.get_star(Users.fine_user(chatId).getDate_birth(), 22);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    ImageIO.write(bi, "jpg", baos);
+                    byte[] bytes = baos.toByteArray();
+                    bot.execute(new SendPhoto(chatId, bytes));
 
-                    Path imagePath = Paths.get("yourImageName.PNG");
-                    byte[] c = Files.readAllBytes(imagePath);
-                 //   System.out.println("execute!!!!");
-                    SendResponse a = bot.execute(new SendPhoto(chatId, c));
+                    bi = DrawingStar.get_star(Users.fine_user(chatId).getDate_birth(), 9);
+                    baos = new ByteArrayOutputStream();
+                    ImageIO.write(bi, "jpg", baos);
+                    bytes = baos.toByteArray();
+                    bot.execute(new SendPhoto(chatId, bytes));
 
-
-                     System.out.println(a);
-                    DrawingStar.get_star(Users.fine_user(chatId).getDate_birth(), 9);
-                    imagePath = Paths.get("yourImageName.PNG");
-                    c = Files.readAllBytes(imagePath);
-                    a = bot.execute(new SendPhoto(chatId, c));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -170,10 +210,12 @@ public class Main {
     }
 
     private static void _massege(Update mes, TelegramBot bot) throws NullPointerException {
+
         Long id_user = mes.message().from().id();
         long chatId = mes.message().chat().id();
         String text_messege = get_text_to_mesege_from_update(mes);
         String answer = process_message(text_messege, id_user, bot);
+        check_users(mes, bot);
 
         if (Users.fine_user(id_user).getEtap() == 0)
             bot.execute(new SendMessage(chatId, answer).replyToMessageId(mes.message().messageId()));
@@ -184,18 +226,22 @@ public class Main {
         }
     }
 
-    private synchronized static void _massege_arkan(Long chatId, TelegramBot bot,String tile, int raz,int l1, int l2, int l3, int l4, int l5, int l6 ){ // отапрвляет сообщения о предсказании
+    private synchronized static void _massege_arkan(Long chatId, TelegramBot bot, String tile, int raz, int l1, int l2, int l3, int l4, int l5, int l6) { // отапрвляет сообщения о предсказании
         try {
-          //  System.out.println();
-          //  System.out.println("clak_TRI");
+
             HashMap<Integer, Integer> nomera = Service.calck_number_(Users.fine_user(chatId).getDate_birth(), raz);
-         //   System.out.println("draw_TRI");
-            DrawingStar.draw_vertex(Users.fine_user(chatId).getDate_birth(),tile , raz, nomera.get(l1),nomera.get(l2),nomera.get(l3),nomera.get(l4),nomera.get(l5),nomera.get(l6));
-            Path imagePath = Paths.get("yourImageName.PNG");
-            byte[] c = Files.readAllBytes(imagePath);
-         //   System.out.println("STOPdraw_TRI");
-            bot.execute(new SendPhoto(chatId, c).caption(Array_TEXT.getTextFromArkan(Service.LICHNOST, Array_TEXT.LICHNOST_COD)));
-         //   System.out.println("execute!!!!");
+
+            BufferedImage bi = DrawingStar.draw_vertex(Users.fine_user(chatId).getDate_birth(), tile, raz, nomera.get(l1), nomera.get(l2), nomera.get(l3), nomera.get(l4), nomera.get(l5), nomera.get(l6));
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(bi, "jpg", baos);
+            byte[] bytes = baos.toByteArray();
+            bot.execute(new SendPhoto(chatId, bytes).caption(Array_TEXT.getTextFromArkan(Service.LICHNOST, Array_TEXT.LICHNOST_COD)));
+
+            //  Path imagePath = Paths.get("yourImageName.PNG");
+            //   byte[] c = Files.readAllBytes(imagePath);
+
+            //  bot.execute(new SendPhoto(chatId, c).caption(Array_TEXT.getTextFromArkan(Service.LICHNOST, Array_TEXT.LICHNOST_COD)));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
