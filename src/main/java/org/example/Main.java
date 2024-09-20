@@ -30,6 +30,7 @@ public class Main {
         TelegramBot bot = new TelegramBot(BOT_TOKKEN_test);
 
         Save_to_disk.load_to_disk_points_for_users();
+        //Save_to_disk.load_to_disk_points_for_users1();
         bot.setUpdatesListener(updates -> {
             Update mes;
 
@@ -41,14 +42,19 @@ public class Main {
 ////                }
 //
 //                System.out.println("01.03.87");
-                System.out.println(mes);
+             //   System.out.println(updates.size() + "!!!!!!");
+
 
                 try {
 
                     //   Payment.Pay(bot,mes.message().from().id());
-
+                    //Clear_chats.clear_chat(bot,mes.message().chat().id());
+                    System.out.println(Clear_chats.getText());
                     if (mes.callbackQuery() != null) _callbackQuery(mes, bot);
-                    if (mes.message() != null) _massege(mes, bot);
+                    else if (mes.message().text() != null) _massege(mes, bot);
+                    else {send_messege_from_status(mes,bot);
+
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -82,6 +88,15 @@ public class Main {
                     bot.execute(new SendMessage(message.message().chat().id(), get_users()));
             }
 
+            if (message.message().text().indexOf("/all_text") == 0) {
+                if (Users.isAdmin(message.message().from().id()))
+                    for (Integer key : Array_TEXT.text.keySet()) {
+                        String value = Array_TEXT.text.get(key);
+                        //System.out.println("Key: " + key + ", Value: " + value);
+                        bot.execute(new SendMessage(message.message().chat().id(), key+" ::\n "+value));
+                    }
+            }
+
             String nik = message.message().from().firstName();
 
 //            System.out.println(message);
@@ -110,7 +125,9 @@ public class Main {
         User user = Users.fine_user(user_id);
         //System.out.println(user.getDate_birth());
         String bd = Accept_date_birth.get_date(mes);
-        if (bd.length() > 1) user.setDate_birth(bd);
+        if (bd.length() > 1) {
+            user.setDate_birth(bd);
+        }
 
         // if (bd.length() > 1)   StringToDate(bd);
         if (user.getDate_birth() == null) sb.append(Text_puttern.date_of_birth);
@@ -128,7 +145,6 @@ public class Main {
     }
 
     private static void _callbackQuery(Update mes, TelegramBot bot) throws NullPointerException {
-
         bot.execute(new AnswerCallbackQuery(mes.callbackQuery().id()));
         bot.execute(new AnswerInlineQuery("callbackQuery"));
 
@@ -210,20 +226,23 @@ public class Main {
     }
 
     private static void _massege(Update mes, TelegramBot bot) throws NullPointerException {
+        check_users(mes, bot);
+        send_messege_from_status(mes, bot);
+      //  Clear_chats.add_id_mess(mes.message().messageId());
+    }
 
+    private static void send_messege_from_status(Update mes, TelegramBot bot) {
         Long id_user = mes.message().from().id();
         long chatId = mes.message().chat().id();
         String text_messege = get_text_to_mesege_from_update(mes);
         String answer = process_message(text_messege, id_user, bot);
-        check_users(mes, bot);
-
         if (Users.fine_user(id_user).getEtap() == 0)
             bot.execute(new SendMessage(chatId, answer).replyToMessageId(mes.message().messageId()));
         if (Users.fine_user(id_user).getEtap() == 1) {
-
             SendMessage call = new SendMessage(chatId, "Дата рождения <b>" + Users.getUsers().get(chatId).getDate_birth() + "</b>. Выберети сферу :").protectContent(true).parseMode(ParseMode.HTML).replyMarkup(Keyboar.getKeyBord());
             bot.execute(call);
         }
+
     }
 
     private synchronized static void _massege_arkan(Long chatId, TelegramBot bot, String tile, int raz, int l1, int l2, int l3, int l4, int l5, int l6) { // отапрвляет сообщения о предсказании
@@ -235,7 +254,11 @@ public class Main {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(bi, "jpg", baos);
             byte[] bytes = baos.toByteArray();
-            bot.execute(new SendPhoto(chatId, bytes).caption(Array_TEXT.getTextFromArkan(Service.LICHNOST, Array_TEXT.LICHNOST_COD)));
+            System.out.println("-------------------------");
+            bot.execute(new SendPhoto(chatId, bytes).caption(nomera.get(1)+"\n"+Array_TEXT.getTextFromArkan(nomera.get(1), Array_TEXT.LICHNOST_COD)));
+
+           // bot.execute(new SendPhoto(chatId, bytes).caption(Array_TEXT.getTextFromArkan(nomera.get(1), 1)));
+
 
             //  Path imagePath = Paths.get("yourImageName.PNG");
             //   byte[] c = Files.readAllBytes(imagePath);

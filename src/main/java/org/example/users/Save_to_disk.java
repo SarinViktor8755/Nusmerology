@@ -25,27 +25,7 @@ public class Save_to_disk {
     }
 
     public static void load_to_disk_points_for_users() {
-//        try {
-//        Users.getUsers().clear();
-//            int i = 0;
-//            BufferedReader br = new BufferedReader(new FileReader(users_file));
-//            String line = br.readLine();
-//            while (line != null) {
-//                User user = new User();
-//                i++;
-//                String[] split_l = line.split(",");
-//                user.setEtap(Integer.valueOf(split_l[1]));
-//                user.setDate_birth(String.valueOf(split_l[2]));
-//                Users.getUsers().put(Long.valueOf(split_l[0]),user);
-//                System.out.println("!!" + split_l[2]);
-//
-//            }
-//        br.close();
-//        } catch (FileNotFoundException e) {
-//            throw new RuntimeException(e);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
+
         BufferedReader reader;
 
         try {
@@ -63,6 +43,36 @@ public class Save_to_disk {
                 user.setDate_birth(String.valueOf(split_l[2]));
                 Users.getUsers().put(Long.valueOf(split_l[0]),user);
                 //  System.out.println("!!" + split_l[2]);
+                line = reader.readLine();
+            }
+
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    public static void load_to_disk_points_for_users1() {
+
+        BufferedReader reader;
+
+        try {
+            reader = new BufferedReader(new FileReader("https://docs.google.com/spreadsheets/d/1IgKUyj7ua7S2hRyJKEs_8UTQIBBL683JVlKa7CW9_xY/edit?usp=sharing"));
+            String line = reader.readLine();
+
+            while (line != null) {
+                System.out.println(line);
+                // read next line
+
+//                User user = new User();
+//
+//                String[] split_l = line.split(",");
+//                user.setEtap(Integer.valueOf(split_l[1]));
+//                user.setDate_birth(String.valueOf(split_l[2]));
+//                Users.getUsers().put(Long.valueOf(split_l[0]),user);
+//                //  System.out.println("!!" + split_l[2]);
                 line = reader.readLine();
             }
 

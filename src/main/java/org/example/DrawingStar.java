@@ -71,11 +71,15 @@ public class DrawingStar {
         g2d.drawString(String.valueOf(nomera.get(79)), 330, 320);
 
         g2d.drawString(String.valueOf(nomera.get(76)), 210, 370);
-        g2d.drawString(String.valueOf(nomera.get(78)), 270, 370);
+
+        if (nomera.get(78) >= 10) {
+            g2d.drawString(String.valueOf(nomera.get(78)), 260, 370);
+        } else
+            g2d.drawString(String.valueOf(nomera.get(78)), 270, 370);
 
         g2d.drawString(String.valueOf(nomera.get(11)), 180, 185);
         g2d.drawString(String.valueOf(nomera.get(12)), 300, 185);
-        g2d.drawString(String.valueOf(nomera.get(13)), 150, 290);
+        g2d.drawString(String.valueOf(nomera.get(13)), 145, 290);
         g2d.drawString(String.valueOf(nomera.get(14)), 330, 290);
         g2d.drawString(String.valueOf(nomera.get(15)), 240, 360);
 
@@ -84,17 +88,18 @@ public class DrawingStar {
         g2d.drawString(String.valueOf(nomera.get(92)), 200, 253);
 
         if (nomera.get(Service.MISSION_DUSHI) >= 10) {
-       //     g2d.setFont(new Font("Purisa", Font.BOLD, 40));
+            //     g2d.setFont(new Font("Purisa", Font.BOLD, 40));
             g2d.drawString(String.valueOf(nomera.get(93)), 275, 257);
         } else {
-        //    g2d.setFont(new Font("Purisa", Font.BOLD, 60));
+            //    g2d.setFont(new Font("Purisa", Font.BOLD, 60));
             g2d.drawString(String.valueOf(nomera.get(93)), 285, 257);
         }
-       // g2d.drawString(String.valueOf(nomera.get(93)), 285, 253);
+        // g2d.drawString(String.valueOf(nomera.get(93)), 285, 253);
 
         g2d.drawString(String.valueOf(nomera.get(94)), 217, 300);
-        g2d.drawString(String.valueOf(nomera.get(95)), 260, 300);
-
+        if (nomera.get(nomera.get(95)) >= 10) {
+            g2d.drawString(String.valueOf(nomera.get(95)), 250, 300);
+        } else g2d.drawString(String.valueOf(nomera.get(95)), 260, 300);
 
         return newBi;
     }
@@ -107,16 +112,13 @@ public class DrawingStar {
         InputStream is = new ByteArrayInputStream(vertax_Image);
         BufferedImage newBi = ImageIO.read(is);
         Graphics2D g2d = (Graphics2D) newBi.getGraphics();
-
         g2d.setColor(Color.BLACK);
         g2d.setFont(new Font("Purisa", Font.BOLD, 18));
-
         g2d.setFont(new Font("Purisa", Font.BOLD, 10));
         g2d.drawString(tile, 5, 10);
 
         g2d.setFont(new Font("Purisa", Font.BOLD, 18));
-
-          g2d.drawString(String.valueOf(l1), 25, 170);
+        g2d.drawString(String.valueOf(l1), 25, 170);
         g2d.drawString(String.valueOf(l2), 150, 170);
         g2d.drawString(String.valueOf(l3), 90, 25);
         g2d.setFont(new Font("Purisa", Font.BOLD, 15));

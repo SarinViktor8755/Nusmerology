@@ -41,7 +41,8 @@ public class Accept_date_birth {
         LocalDate startDate = LocalDate.parse(strDate, formatter);
         LocalDate endDate = LocalDate.now();
         Period period = Period.between(startDate, endDate);
-        //  System.out.println(period.getYears() + " !!!");      // 4
+       // System.out.println(startDate.getYear() + "  !!!");
+         // System.out.println(period.getYears() + " !!!");      // 4
         if (period.getYears() > 100) {
             while (period.getYears() > 100) {
                 startDate = startDate.plusYears(100);
