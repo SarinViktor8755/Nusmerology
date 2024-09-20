@@ -29,11 +29,25 @@ public class DrawingStar {
 
         HashMap<Integer, Integer> nomera = Service.calck_number_(birthday, raz);
 
+        BufferedImage newBi = ImageIO.read(new ByteArrayInputStream(start_Image));
+        ByteArrayInputStream byteStream1 = new ByteArrayInputStream("Purisa Bold.ttf".getBytes());
 
-        InputStream is = new ByteArrayInputStream(start_Image);
-        BufferedImage newBi = ImageIO.read(is);
+
+
         Graphics2D g2d = (Graphics2D) newBi.getGraphics();
+//        BasicStroke wideStroke = new BasicStroke(12.0f);
+//        g2d.setStroke(wideStroke);
 
+//        g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+//        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+//        g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+//        g2d.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
+//        g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+//        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+//        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+//        g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setColor(Color.BLACK);
 
         g2d.setFont(new Font("Purisa", Font.BOLD, 35));
@@ -83,7 +97,6 @@ public class DrawingStar {
         g2d.drawString(String.valueOf(nomera.get(14)), 330, 290);
         g2d.drawString(String.valueOf(nomera.get(15)), 240, 360);
 
-
         g2d.drawString(String.valueOf(nomera.get(91)), 240, 220);
         g2d.drawString(String.valueOf(nomera.get(92)), 200, 253);
 
@@ -97,7 +110,7 @@ public class DrawingStar {
         // g2d.drawString(String.valueOf(nomera.get(93)), 285, 253);
 
         g2d.drawString(String.valueOf(nomera.get(94)), 217, 300);
-        if (nomera.get(nomera.get(95)) >= 10) {
+        if (nomera.get(95) >= 10) {
             g2d.drawString(String.valueOf(nomera.get(95)), 250, 300);
         } else g2d.drawString(String.valueOf(nomera.get(95)), 260, 300);
 
@@ -112,6 +125,7 @@ public class DrawingStar {
         InputStream is = new ByteArrayInputStream(vertax_Image);
         BufferedImage newBi = ImageIO.read(is);
         Graphics2D g2d = (Graphics2D) newBi.getGraphics();
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setColor(Color.BLACK);
         g2d.setFont(new Font("Purisa", Font.BOLD, 18));
         g2d.setFont(new Font("Purisa", Font.BOLD, 10));
