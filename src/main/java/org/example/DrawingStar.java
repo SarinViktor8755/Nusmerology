@@ -134,7 +134,7 @@ public class DrawingStar {
         g2d.setFont(new Font("Purisa", Font.BOLD, 18));
         g2d.drawString(String.valueOf(l1), 25, 170);
         g2d.drawString(String.valueOf(l2), 150, 170);
-        g2d.drawString(String.valueOf(l3), 90, 25);
+       g2d.drawString(String.valueOf(l3), 90, 25);
         g2d.setFont(new Font("Purisa", Font.BOLD, 15));
         g2d.drawString(String.valueOf(l4), 90, 185);
 

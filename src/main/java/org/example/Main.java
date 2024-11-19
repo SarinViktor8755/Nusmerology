@@ -42,7 +42,7 @@ public class Main {
 ////                }
 //
 //                System.out.println("01.03.87");
-             //   System.out.println(updates.size() + "!!!!!!");
+                //   System.out.println(updates.size() + "!!!!!!");
 
 
                 try {
@@ -52,7 +52,8 @@ public class Main {
                     System.out.println(Clear_chats.getText());
                     if (mes.callbackQuery() != null) _callbackQuery(mes, bot);
                     else if (mes.message().text() != null) _massege(mes, bot);
-                    else {send_messege_from_status(mes,bot);
+                    else {
+                        send_messege_from_status(mes, bot);
 
                     }
                 } catch (Exception e) {
@@ -93,7 +94,7 @@ public class Main {
                     for (Integer key : Array_TEXT.text.keySet()) {
                         String value = Array_TEXT.text.get(key);
                         //System.out.println("Key: " + key + ", Value: " + value);
-                        bot.execute(new SendMessage(message.message().chat().id(), key+" ::\n "+value));
+                        bot.execute(new SendMessage(message.message().chat().id(), key + " ::\n " + value));
                     }
             }
 
@@ -165,30 +166,30 @@ public class Main {
 
             if (mes.callbackQuery().data().equals("callback_data1")) {
                 //  new  (chatId,int[1,2,3]a);
-                _massege_arkan(chatId, bot, "Личность", 22, 13, 11, 1, 92, 75, 71);
-                _massege_arkan(chatId, bot, "Личность", 9, 13, 11, 1, 92, 75, 71);
+                _massege_arkan(chatId, bot, "Личность", 22, 13, 11, 1, 92, 75, 71,Service.LICHNOST);
+                _massege_arkan(chatId, bot, "Личность", 9, 13, 11, 1, 92, 75, 71,Service.LICHNOST);
             }
             if (mes.callbackQuery().data().equals("callback_data2"))
             // bot.execute(new SendMessage(chatId, "Сфера духовности").parseMode(ParseMode.HTML));
             {
-                _massege_arkan(chatId, bot, "Духовность", 22, 11, 12, 2, 91, 72, 73);
-                _massege_arkan(chatId, bot, "Духовность", 9, 11, 12, 2, 91, 72, 73);
+                _massege_arkan(chatId, bot, "Духовность", 22, 11, 12, 2, 91, 72, 73,Service.DUCHOVNOST);
+                _massege_arkan(chatId, bot, "Духовность", 9, 11, 12, 2, 91, 72, 73,Service.DUCHOVNOST);
             }
             //   _massege_arkan(chatId,bot,10,11,12,2,91,72,73);
             if (mes.callbackQuery().data().equals("callback_data3")) {
-                _massege_arkan(chatId, bot, "Деньги", 22, 12, 14, 3, 93, 74, 80);
-                _massege_arkan(chatId, bot, "Деньги", 9, 12, 14, 3, 93, 74, 80);
+                _massege_arkan(chatId, bot, "Деньги", 22, 12, 14, 3, 93, 74, 80,Service.FINANS);
+                _massege_arkan(chatId, bot, "Деньги", 9, 12, 14, 3, 93, 74, 80,Service.FINANS);
             }
             //_massege_arkan(chatId,bot,10,12,14,3,93,74,80);
             if (mes.callbackQuery().data().equals("callback_data4")) {
                 bot.execute(new SendMessage(chatId, "сфера отношений").parseMode(ParseMode.HTML));
-                _massege_arkan(chatId, bot, "Отошения", 22, 15, 13, 5, 94, 76, 77);
-                _massege_arkan(chatId, bot, "Отошения", 9, 15, 13, 5, 94, 76, 77);
+                _massege_arkan(chatId, bot, "Отошения", 22, 15, 13, 5, 94, 76, 77,Service.OTNOSHENIE);
+                _massege_arkan(chatId, bot, "Отошения", 9, 15, 13, 5, 94, 76, 77,Service.OTNOSHENIE);
 
             }
             if (mes.callbackQuery().data().equals("callback_data5")) {
-                _massege_arkan(chatId, bot, "Здоровье", 22, 14, 15, 4, 95, 79, 78);
-                _massege_arkan(chatId, bot, "Здоровье", 9, 14, 15, 4, 95, 79, 78);
+                _massege_arkan(chatId, bot, "Здоровье", 22, 14, 15, 4, 95, 79, 78,Service.ZDOROVIE);
+                _massege_arkan(chatId, bot, "Здоровье", 9, 14, 15, 4, 95, 79, 78,Service.ZDOROVIE);
             }
             //   bot.execute(new SendMessage(chatId, "сфера здоровья").parseMode(ParseMode.HTML));
             if (mes.callbackQuery().data().equals("callback_data6")) {
@@ -228,7 +229,7 @@ public class Main {
     private static void _massege(Update mes, TelegramBot bot) throws NullPointerException {
         check_users(mes, bot);
         send_messege_from_status(mes, bot);
-      //  Clear_chats.add_id_mess(mes.message().messageId());
+        //  Clear_chats.add_id_mess(mes.message().messageId());
     }
 
     private static void send_messege_from_status(Update mes, TelegramBot bot) {
@@ -245,7 +246,7 @@ public class Main {
 
     }
 
-    private synchronized static void _massege_arkan(Long chatId, TelegramBot bot, String tile, int raz, int l1, int l2, int l3, int l4, int l5, int l6) { // отапрвляет сообщения о предсказании
+    private synchronized static void _massege_arkan(Long chatId, TelegramBot bot, String tile, int raz, int l1, int l2, int l3, int l4, int l5, int l6,Integer sfera) { // отапрвляет сообщения о предсказании
         try {
 
             HashMap<Integer, Integer> nomera = Service.calck_number_(Users.fine_user(chatId).getDate_birth(), raz);
@@ -254,16 +255,14 @@ public class Main {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(bi, "jpg", baos);
             byte[] bytes = baos.toByteArray();
+
+//            System.out.println(raz);
+//            System.out.println(nomera.get(l1));
+
             System.out.println("-------------------------");
-            bot.execute(new SendPhoto(chatId, bytes).caption(nomera.get(1)+"\n"+Array_TEXT.getTextFromArkan(nomera.get(1), Array_TEXT.LICHNOST_COD)));
 
-           // bot.execute(new SendPhoto(chatId, bytes).caption(Array_TEXT.getTextFromArkan(nomera.get(1), 1)));
+            bot.execute(new SendPhoto(chatId, bytes).caption(nomera.get(1) + " : " + Array_TEXT.getTextFromArkan(sfera, nomera.get(1))));
 
-
-            //  Path imagePath = Paths.get("yourImageName.PNG");
-            //   byte[] c = Files.readAllBytes(imagePath);
-
-            //  bot.execute(new SendPhoto(chatId, c).caption(Array_TEXT.getTextFromArkan(Service.LICHNOST, Array_TEXT.LICHNOST_COD)));
 
         } catch (IOException e) {
             e.printStackTrace();

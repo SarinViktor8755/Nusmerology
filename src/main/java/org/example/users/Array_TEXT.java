@@ -1,5 +1,6 @@
 package org.example.users;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -302,11 +303,15 @@ public class Array_TEXT {
         return text.get(key);
     }
 
-    public static String getTextFromArkan(int znach, int arkan) {
-        System.out.println(znach);
-        System.out.println(arkan);
-        System.out.println((arkan * 100) + znach);
-        String result = text.get((arkan * 100) + znach);
+    public static String getTextFromArkan(int sfera, int arkan) throws IOException {
+        System.out.println("znach" + sfera);
+        System.out.println("arkan" + arkan);
+
+
+       // System.out.println((arkan * 100) + znach);
+        //String result = text.get((arkan * 100) + znach);
+        String result = Array_of_responses.getWord((sfera * 100) + arkan);
+
         try {
             result.length();
         }catch (NullPointerException e){
