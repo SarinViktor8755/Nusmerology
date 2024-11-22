@@ -14,11 +14,11 @@ public class DrawingStar {
         try {
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ImageIO.write(ImageIO.read(new File("imageStar.jpg")), "jpg", baos);
+            ImageIO.write(ImageIO.read(new File("asssets/imageStar.jpg")), "jpg", baos);
             start_Image = baos.toByteArray();
 
             baos = new ByteArrayOutputStream();
-            ImageIO.write(ImageIO.read(new File("imageVertax.jpg")), "jpg", baos);
+            ImageIO.write(ImageIO.read(new File("asssets/imageVertax.jpg")), "jpg", baos);
             vertax_Image = baos.toByteArray();
         } catch (Exception e) {
             e.printStackTrace();

@@ -310,7 +310,7 @@ public class Array_TEXT {
 
        // System.out.println((arkan * 100) + znach);
         //String result = text.get((arkan * 100) + znach);
-        String result = Array_of_responses.getWord((sfera * 100) + arkan);
+        String result = Array_of_responses.read_file((sfera * 100) + arkan);
 
         try {
             result.length();

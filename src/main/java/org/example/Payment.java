@@ -11,6 +11,12 @@ import com.pengrad.telegrambot.response.StringResponse;
 
 public class Payment {
 
+    public static void main(String[] args) {
+        for (int i = 1; i <= 1000; i++) {
+            System.out.println(i);
+        }
+    }
+
     public static void Pay(TelegramBot bot, Long chat_id){
         //bot.execute(new SendMessage(chat_id, "Премиум"));
         CreateInvoiceLink invoiceLink = new CreateInvoiceLink("tile","Описание",

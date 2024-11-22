@@ -31,11 +31,23 @@ public class Main {
 
         Save_to_disk.load_to_disk_points_for_users();
         //Save_to_disk.load_to_disk_points_for_users1();
+
+        System.out.println(" ######    #####   ######             #####   ######     ##     ######   ######\n" +
+                "  ##  ##  ##   ##  # ## #            ##   ##  # ## #    ####     ##  ##  # ## #\n" +
+                "  ##  ##  ##   ##    ##              #          ##     ##  ##    ##  ##    ##\n" +
+                "  #####   ##   ##    ##               #####     ##     ##  ##    #####     ##\n" +
+                "  ##  ##  ##   ##    ##                   ##    ##     ######    ## ##     ##\n" +
+                "  ##  ##  ##   ##    ##              ##   ##    ##     ##  ##    ##  ##    ##\n" +
+                " ######    #####    ####              #####    ####    ##  ##   #### ##   ####\n" +
+                "                           ########");
+
+        System.out.println("");
         bot.setUpdatesListener(updates -> {
             Update mes;
 
             for (int i = 0; i < updates.size(); i++) {
                 mes = updates.get(i);
+                System.out.println("<<<=====MESSAGE");
 //                System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 ////                for (int j = 0; j < 100_000_000; j++) {
 ////                    calck_number("01.03.87");
@@ -43,6 +55,19 @@ public class Main {
 //
 //                System.out.println("01.03.87");
                 //   System.out.println(updates.size() + "!!!!!!");
+                try {
+                    Long chatId = mes.message().chat().id();
+                    bot.execute(new SendMessage(chatId,"213"));
+                //    System.out.println(mes.message().text());
+                    int a =  Integer.valueOf(mes.message().text());
+               //     System.out.println(a);
+                  //  System.out.println("--- " + Array_of_responses.read_file(a));
+
+
+                    bot.execute(new SendMessage(chatId, Array_of_responses.read_file(a)).parseMode(ParseMode.HTML));
+                } catch (Exception e) {
+                    //e.printStackTrace();
+                }
 
 
                 try {
@@ -261,7 +286,9 @@ public class Main {
 
             System.out.println("-------------------------");
 
-            bot.execute(new SendPhoto(chatId, bytes).caption(nomera.get(1) + " : " + Array_TEXT.getTextFromArkan(sfera, nomera.get(1))));
+
+
+            bot.execute(new SendPhoto(chatId, bytes).caption(nomera.get(l3)+ " : " + Array_TEXT.getTextFromArkan(sfera, nomera.get(l3))));
 
 
         } catch (IOException e) {

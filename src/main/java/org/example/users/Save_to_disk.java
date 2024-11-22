@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.*;
 
 public class Save_to_disk {
-    static String users_file = "users_kist.txt";
+    static String users_file = "asssets/users_kist.txt";
 
     public static void save_to_disk_users() {
         StringBuilder sb = new StringBuilder();
