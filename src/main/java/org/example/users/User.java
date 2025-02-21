@@ -3,8 +3,13 @@ package org.example.users;
 public class User {
 
     private String date_birth;
+    private String date_of_writing_the_first_message;
     private int etap;
-    private Long date_of_writing_the_first_message = 0L;
+    //private Long date_of_writing_the_first_message = 0L; // дата рождения
+ //   private Long partner_date_of_birth = 0L; // дата рождения его
+
+
+
 
 
     {
@@ -29,12 +34,24 @@ public class User {
     }
 
     public void restart_etap() {
-        this.etap = 0;
+        etap = Users.ETAP_NOTH_DATE;
         date_birth = null;
+    }
+
+    public String getDate_of_writing_the_first_message() {
+        return date_of_writing_the_first_message;
+    }
+
+    public void setDate_of_writing_the_first_message(String date_of_writing_the_first_message) {
+        this.date_of_writing_the_first_message = date_of_writing_the_first_message;
     }
 
     @Override
     public String toString() {
-        return  "DB='" + getDate_birth() + ", etap=" + getEtap() + ", first_message=" + date_of_writing_the_first_message;
+        return "org.example.users.User{" +
+                "date_birth='" + getDate_birth() + '\'' +
+                ", date_of_writing_the_first_message='" + getDate_of_writing_the_first_message() + '\'' +
+                ", etap=" + getEtap() +
+                '}';
     }
 }

@@ -10,8 +10,8 @@ public class Service {
     public static Integer LICHNOST = 1;
     public static Integer DUCHOVNOST = 2;
     public static Integer FINANS = 3;
-    public static Integer ZDOROVIE = 4;
-    public static Integer OTNOSHENIE = 5;
+    public static Integer OTNOSHENIE = 4;
+    public static Integer ZDOROVIE = 5;
     public static Integer MISSION_DUSHI = 6;
 
     public static int[] calculate_success_code() {
@@ -117,5 +117,21 @@ public class Service {
         return nomera;
     }
 
+
+    public static HashMap<Integer, Integer> sumHashMaps(HashMap<Integer, Integer> map1, HashMap<Integer, Integer> map2) {
+        HashMap<Integer, Integer> result = new HashMap<>();
+
+        // Добавляем все элементы из первого HashMap
+        for (Integer key : map1.keySet()) {
+            result.put(key, map1.get(key));
+        }
+
+        // Складываем элементы из второго HashMap
+        for (Integer key : map2.keySet()) {
+            result.put(key, result.getOrDefault(key, 0) + map2.get(key));
+        }
+
+        return result;
+    }
 
 }

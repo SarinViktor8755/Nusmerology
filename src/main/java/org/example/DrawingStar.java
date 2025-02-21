@@ -25,9 +25,21 @@ public class DrawingStar {
         }
     }
 
-    public synchronized static BufferedImage get_star(String birthday, int raz) throws IOException {
+    public synchronized static BufferedImage get_star(String birthday,String birthday_1, int raz) throws IOException {
+
 
         HashMap<Integer, Integer> nomera = Service.calck_number_(birthday, raz);
+        if (!birthday_1.equals("-")){
+            HashMap<Integer, Integer> nomera_1 = Service.calck_number_(birthday_1, raz);
+            HashMap<Integer, Integer> nomera_0 = Service.calck_number_(birthday, raz);
+
+            nomera = Service.sumHashMaps(nomera_1,nomera_0);
+            for (Integer key : nomera.keySet()) {
+                int newValue = Service.reduce_number_to_single_digit(nomera.get(key),22); // Применяем функцию
+                nomera.put(key, newValue); // Сохраняем новое значение
+            }
+        }
+
 
         BufferedImage newBi = ImageIO.read(new ByteArrayInputStream(start_Image));
         ByteArrayInputStream byteStream1 = new ByteArrayInputStream("Purisa Bold.ttf".getBytes());
@@ -70,7 +82,12 @@ public class DrawingStar {
         g2d.setFont(new Font("Purisa", Font.BOLD, 20));
 
         //////////
-        g2d.drawString(birthday, 10, 25);
+        if (birthday_1.equals("-")) {
+            g2d.drawString(birthday, 10, 25);
+        }else {
+            g2d.drawString(birthday +" + "+ birthday_1, 10, 25);
+        }
+
 
         g2d.drawString(String.valueOf(nomera.get(72)), 190, 150);
         g2d.drawString(String.valueOf(nomera.get(73)), 280, 150);
